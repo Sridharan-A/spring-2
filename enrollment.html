@@ -1,0 +1,44 @@
+<html ng-app="exampleApp">
+  <head>
+    <title>Template</title>
+    <!-- Latest compiled and minified CSS -->
+    <script src="./js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+
+  <body ng-controller="employeeController">
+    <script>
+      var myApp = angular.module("exampleApp", []); 
+      var url = "http://localhost:8080/company/employee";
+      myApp.controller('employeeController', function EmployeeController($scope, $http, $window) {
+            $scope.load = function(e){
+                $http.get(url).then(
+                    function(response){
+                        $scope.students = response.data;
+                    }
+              );
+          }
+      });
+    </script>
+
+    <div class="panel panel-primary" ng-init="load()">
+      <div class="panel-body">
+        <table class="table table-striped">
+          <thead>
+            <th>id</th>
+            <th>name</th>
+            <th>section</th>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in students">
+              <td>{{item.empId}}</td>
+              <td>{{item.empName}}</td>
+              <td>{{item.sect}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
